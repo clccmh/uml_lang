@@ -1,6 +1,6 @@
 import math
 
-class uml_object:
+class UmlObject:
   def __init__(self, name):
     self.name = name
     self.content = []
@@ -24,7 +24,11 @@ class uml_object:
     return  string
 
 
-class connection:
-  def __init__(self, uml1, uml2):
+class Connection:
+  def __init__(self, uml1, uml2, connector):
     self.uml1 = uml1
     self.uml2 = uml2
+    self.connector = connector
+
+  def __str__(self):
+    return str(self.uml1) + "\n" + str(self.connector) + "\n" + str(self.uml2)

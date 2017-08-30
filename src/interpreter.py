@@ -1,4 +1,5 @@
 from token import Token
+from uml import UmlObject, Connection
 
 class Interpreter(object):
   def __init__(self, txt):
@@ -75,15 +76,42 @@ class Interpreter(object):
     # self.error()
 
   def eat(self, token_type):
-    if self.current_token.type == token_type:
-      self.current_token = self.get_next_token()
+    self.current_token = self.get_next_token()
+    if self.current_token.type != token_type:
+      self.error(str(self.current_token))
     else:
-      self.error(str(self.current_token.value))
+      return self.current_token
 
   def expr(self):
-    result = self.get_next_token()
-    while result.type is not Token.EOF:
-      if result.type != Token.EOL and result.type != Token.WHITESPACE and result.type != Token.INDENT:
-        print(result)
-      result = self.get_next_token()
+    self.current_token = self.get_next_token()
+    objects = {}
+    connections = []
+    last_class = None;
+    while self.current_token.type is not Token.EOF:
+      if self.current_token.type == Token.CLASS:
+        if self.current_token.value not in objects:
+          uml_obj = UmlObject(self.current_token.value)
+          objects[self.current_token.value] = uml_obj
+          last_class = uml_obj
+        else:
+          class1 = objects[self.current_token.value]
+          self.eat(Token.WHITESPACE)
+          connector = self.eat(Token.CONNECTOR).value
+          self.eat(Token.WHITESPACE)
+          class2 = self.eat(Token.CLASS)
+          if class2.value not in objects:
+            self.error(str(class2) + " not defined.")
+          class2 = objects[class2.value]
+          connections.append(Connection(class1, class2, connector))
+          
+      if self.current_token.type == Token.CLASS_SUBITEM:
+        if last_class:
+          last_class.add_content_item(self.current_token.value)
+        else:
+          self.error()
+
+      self.current_token = self.get_next_token()
+
+    for val in connections:
+      print(val)
 

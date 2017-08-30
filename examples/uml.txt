@@ -1,7 +1,4 @@
 
-# This is a comment
-# This is a test uml document for use with my parser.
-
 Player
   String name
   String address

@@ -31,4 +31,25 @@ class Connection:
     self.connector = connector
 
   def __str__(self):
-    return str(self.uml1) + "\n" + str(self.connector) + "\n" + str(self.uml2)
+    return horizontal_combine(horizontal_combine(self.uml1, self.connector), self.uml2)
+
+
+def horizontal_combine(one, two):
+  one = str(one).split("\n")
+  two = str(two).split("\n")
+
+  index = 0
+  output = ""
+  lone = len(one)
+  ltwo = len(two)
+
+  while index < lone or index < ltwo:
+    output += one[index] if index < lone else " " * len(one[0])
+    output += "  "
+    output += two[index] if index < ltwo else " " * len(two[0])
+    output += "\n"
+    index += 1
+
+  return output
+    
+    

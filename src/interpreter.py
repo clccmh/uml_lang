@@ -1,4 +1,5 @@
 from token import Token
+import uml
 from uml import UmlObject, Connection
 
 class Interpreter(object):

@@ -114,5 +114,6 @@ class Interpreter(object):
       self.current_token = self.get_next_token()
 
     for val in connections:
-      print(val)
+      if not val.printed:
+        print(val)
 

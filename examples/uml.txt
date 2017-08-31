@@ -2,11 +2,20 @@
 Player
   String name
   String address
+  Socket s
   Board board
 
 Board 
-  Boolean[100] ships
+  Ship[100] ships
 
+Socket
+
+Ship
+  String type
 
 Player -> Board
+Player -> Socket
+Board -> Ship
+
+
 

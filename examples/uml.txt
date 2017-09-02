@@ -1,4 +1,8 @@
 
+Game
+  Player P1
+  Player P2
+
 Player
   String name
   String address
@@ -13,6 +17,7 @@ Socket
 Ship
   String type
 
+Game -> Player
 Player -> Board
 Player -> Socket
 Board -> Ship
